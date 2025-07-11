@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="item_code_transport_km" model="item.code">
+        <field name="code">TRN-KM</field>
+        <field name="description">Transport cost per kilometer</field>
+        <field name="unit">ZAR/km</field>
+        <field name="rate_type">transport</field>
+    </record>
+    <record id="item_code_transport_load" model="item.code">
+        <field name="code">TRN-LOAD</field>
+        <field name="description">Transport cost per load</field>
+        <field name="unit">ZAR/load</field>
+        <field name="rate_type">transport</field>
+    </record>
+    <record id="item_code_disposal_ton" model="item.code">
+        <field name="code">DSP-TON</field>
+        <field name="description">Disposal cost per ton</field>
+        <field name="unit">ZAR/ton</field>
+        <field name="rate_type">disposal</field>
+    </record>
+    <record id="item_code_disposal_fixed" model="item.code">
+        <field name="code">DSP-FIXED</field>
+        <field name="description">Fixed disposal fee</field>
+        <field name="unit">ZAR</field>
+        <field name="rate_type">disposal</field>
+    </record>
+    <record id="item_code_rental_bin" model="item.code">
+        <field name="code">RNT-BIN</field>
+        <field name="description">Bin rental cost</field>
+        <field name="unit">ZAR/bin/month</field>
+        <field name="rate_type">rental</field>
+    </record>
+    <record id="item_code_labour_hour" model="item.code">
+        <field name="code">LBR-HOUR</field>
+        <field name="description">Labour cost per hour</field>
+        <field name="unit">ZAR/hour</field>
+        <field name="rate_type">labour</field>
+    </record>
+    <record id="item_code_management_fee" model="item.code">
+        <field name="code">MGT-FEE</field>
+        <field name="description">Management fee</field>
+        <field name="unit">ZAR</field>
+        <field name="rate_type">management</field>
+    </record>
+</odoo>

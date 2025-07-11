@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_manifest_tree" model="ir.ui.view">
+        <field name="name">manifest.manifest.tree</field>
+        <field name="model">manifest.manifest</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="manifest_ref_number"/>
+                <field name="mine_name"/>
+                <field name="waste_customer"/>
+                <field name="waste_type"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_manifest_form" model="ir.ui.view">
+        <field name="name">manifest.manifest.form</field>
+        <field name="model">manifest.manifest</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_generate" string="Generate" type="object" states="booked"/>
+                    <button name="action_schedule" string="Schedule" type="object" states="generated"/>
+                    <button name="action_deliver" string="Deliver" type="object" states="scheduled"/>
+                    <button name="action_authorize" string="Authorize" type="object" states="delivered"/>
+                    <button name="action_generate_invoice" string="Generate Invoice" type="object" states="authorized"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="manifest_ref_number"/>
+                        <field name="mine_name"/>
+                        <field name="waste_customer"/>
+                        <field name="disposal_site"/>
+                        <field name="sawis_number"/>
+                        <field name="item_code_id"/>
+                    </group>
+                    <group>
+                        <field name="waste_vehicle"/>
+                        <field name="registration_number"/>
+                        <field name="fleet_manager"/>
+                        <field name="dt_number"/>
+                        <field name="vehicle_active"/>
+                    </group>
+                    <group>
+                        <field name="start_time"/>
+                        <field name="end_time"/>
+                        <field name="time_spent_in_mine" readonly="1"/>
+                        <field name="collection_bin_number"/>
+                        <field name="waste_type"/>
+                    </group>
+                    <group>
+                        <field name="starting_fuel"/>
+                        <field name="closing_fuel"/>
+                        <field name="starting_oil"/>
+                        <field name="closing_oil"/>
+                        <field name="opening_kms"/>
+                        <field name="closing_kms"/>
+                    </group>
+                    <group>
+                        <field name="truck_weight_before_weighbridge"/>
+                        <field name="truck_weight_after_weighbridge"/>
+                        <field name="weighbridge_receipt" widget="binary" filename="weighbridge_receipt_filename"/>
+                        <field name="weighbridge_receipt_filename"/>
+                        <field name="disposal_certificate" widget="binary" filename="disposal_certificate_filename"/>
+<!--                        <field name="disposal_certificate_filename"/>-->
+                        <field name="invoice_id"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_manifest_search" model="ir.ui.view">
+        <field name="name">manifest.manifest.search</field>
+        <field name="model">manifest.manifest</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="manifest_ref_number"/>
+                <field name="mine_name"/>
+                <field name="waste_customer"/>
+                <field name="waste_type"/>
+                <filter string="Authorized" name="authorized" domain="[('state', '=', 'authorized')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_manifest" model="ir.actions.act_window">
+        <field name="name">Manifests</field>
+        <field name="res_model">manifest.manifest</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_manifest" name="Manifests" action="action_manifest" />
+</odoo>

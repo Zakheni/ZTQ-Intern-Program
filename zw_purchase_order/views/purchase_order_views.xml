@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_purchase_order_form" model="ir.ui.view">
+            <field name="name">zi.purchase.order.form</field>
+            <field name="model">zi.purchase.order</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Order">
+                    <sheet>
+                        <group>
+                            <field name="po_number"/>
+                            <field name="vendor_number"/>
+                            <field name="mine_id"/>
+                            <field name="customer_id"/>
+                            <field name="bin_total"/>
+                            <field name="bin_in_use"/>
+                            <field name="bin_not_in_use"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_purchase_order_tree" model="ir.ui.view">
+            <field name="name">zi.purchase.order.tree</field>
+            <field name="model">zi.purchase.order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="po_number"/>
+                    <field name="mine_id"/>
+                    <field name="bin_total"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_purchase_order_search" model="ir.ui.view">
+            <field name="name">zi.purchase.order.search</field>
+            <field name="model">zi.purchase.order</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="po_number"/>
+                    <field name="vendor_number"/>
+                    <field name="mine_id"/>
+                    <field name="customer_id"/>
+                    <filter string="Active" name="active" domain="[('end_date', '>=', datetime.date.today())]"/>
+                    <filter string="Expired" name="expired" domain="[('end_date', '<', datetime.date.today())]"/>
+                </search>
+            </field>
+        </record>
+        <record id="view_purchase_order_graph" model="ir.ui.view">
+            <field name="name">zi.purchase.order.graph</field>
+            <field name="model">zi.purchase.order</field>
+            <field name="arch" type="xml">
+                <graph type="bar">
+                    <field name="mine_id"/>
+                    <field name="bin_total" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_purchase_order" model="ir.actions.act_window">
+            <field name="name">Purchase Orders</field>
+            <field name="res_model">zi.purchase.order</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{'default_bin_in_use': 0, 'default_bin_not_in_use': 0}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create purchase  your order</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_zw_purchase_order_root" name="Zi-Waste Purchase Order" sequence="70" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_purchase_order_orders" name="Purchase Orders" parent="menu_zw_purchase_order_root" action="action_purchase_order" groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

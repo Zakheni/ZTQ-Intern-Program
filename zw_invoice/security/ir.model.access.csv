@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move_finance_admin,access_account_move_finance_admin,model_account_move,zw_user.group_finance_admin,1,1,1,1
+access_account_move_finance_manager,access_account_move_finance_manager,model_account_move,zw_user.group_finance_manager,1,0,0,0

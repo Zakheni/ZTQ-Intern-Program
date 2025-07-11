@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="model_mine_mine" model="ir.model">
+        <field name="name">Mine</field>
+        <field name="model">mine.mine</field>
+    </record>
+</odoo>

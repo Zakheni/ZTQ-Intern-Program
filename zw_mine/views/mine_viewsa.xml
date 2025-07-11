@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_mine_form" model="ir.ui.view">
+        <field name="name">mine.mine.form</field>
+        <field name="model">mine.mine</field>
+        <field name="arch" type="xml">
+            <form string="Mine">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="vat_number"/>
+                        <field name="mine_code"/>
+                        <field name="sawis_number"/>
+                        <field name="physical_address"/>
+                        <field name="postal_address"/>
+                        <field name="contact_name"/>
+                        <field name="contact_number"/>
+                        <field name="contact_email"/>
+                        <field name="longitude"/>
+                        <field name="latitude"/>
+                    </group>
+                    <notebook>
+                        <page string="Waste Collection Areas">
+                            <field name="waste_collection_area_ids"/>
+                        </page>
+                        <page string="Rates">
+                            <field name="rate_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_mine_tree" model="ir.ui.view">
+        <field name="name">mine.mine.tree</field>
+        <field name="model">mine.mine</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="mine_code"/>
+                <field name="sawis_number"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

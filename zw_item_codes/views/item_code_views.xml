@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_item_code_form" model="ir.ui.view">
+            <field name="name">item.code.form</field>
+            <field name="model">item.code</field>
+            <field name="arch" type="xml">
+                <form string="Item Code">
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="description"/>
+                            <field name="unit"/>
+                            <field name="rate_type"/>
+                            <field name="end_date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_item_code_tree" model="ir.ui.view">
+            <field name="name">item.code.tree</field>
+            <field name="model">item.code</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="unit"/>
+                    <field name="rate_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_item_code" model="ir.actions.act_window">
+            <field name="name">Item Codes</field>
+            <field name="res_model">item.code</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_item_code_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create your first item code</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_zw_item_codes_root" name="Waste Item Codes" sequence="40" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_item_codes_codes" name="Item Codes" parent="menu_zw_item_codes_root" action="action_item_code" groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_disposal_site_form" model="ir.ui.view">
+        <field name="name">disposal.site.form</field>
+        <field name="model">disposal.site</field>
+        <field name="arch" type="xml">
+            <form string="Disposal Site">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="address"/>
+                        <field name="postal_code"/>
+                        <field name="contact_number"/>
+                        <field name="fax"/>
+                        <field name="sawis_number"/>
+                        <field name="waste_type_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_disposal_site_tree" model="ir.ui.view">
+        <field name="name">disposal.site.tree</field>
+        <field name="model">disposal.site</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sawis_number"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

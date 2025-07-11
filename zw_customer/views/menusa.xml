@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <menuitem id="menu_zw_customer_root" name="Zi-Waste Customer Management" sequence="20" groups="zw_user.group_depot_admin"/>
+    <menuitem id="menu_zw_customer_customers" name="Customers" parent="menu_zw_customer_root" action="ir.actions.act_window" 
+              res_model="res.partner" view_mode="tree,form" views="[(False, 'tree'), (ref('view_res_partner_form_zw_customer'), 'form')]" 
+              groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

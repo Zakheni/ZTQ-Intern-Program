@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <menuitem id="menu_zw_disposal_site_root" name="Zi-Waste Disposal Site" sequence="30" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_disposal_site_sites" name="Disposal Sites" parent="menu_zw_disposal_site_root" action="ir.actions.act_window"
+              res_model="disposal.site" view_mode="tree,form" views="[(False, 'tree'), (ref('view_disposal_site_form'), 'form')]" 
+              groups="zw_user.group_depot_admin"/>
+
+    </data>
+</odoo>

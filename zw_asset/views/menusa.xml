@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <menuitem id="menu_zw_asset_root" name="Zi-Waste Asset Management" sequence="10" groups="zw_user.group_depot_admin"/>
+    <menuitem id="menu_zw_asset_bins" name="Bins" parent="menu_zw_asset_root" action="ir.actions.act_window" 
+              res_model="stock.quant" view_mode="tree,form" views="[(False, 'tree'), (ref('view_stock_quant_form_zw_asset'), 'form')]" 
+              groups="zw_user.group_depot_admin"/>
+    <menuitem id="menu_zw_asset_vehicles" name="Vehicles" parent="menu_zw_asset_root" action="ir.actions.act_window" 
+              res_model="fleet.vehicle" view_mode="tree,form" views="[(False, 'tree'), (ref('view_fleet_vehicle_form_zw_asset'), 'form')]" 
+              groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mine_depot_admin,access_mine_depot_admin,zw_mine.model_mine_mine,zw_user.group_depot_admin,1,1,1,1
+access_mine_depot_manager,access_mine_depot_manager,zw_mine.model_mine_mine,zw_user.group_depot_manager,1,0,0,0
+zw_mine.access_waste_collection_area,access_waste_collection_area,zw_mine.model_waste_collection_area,base.group_user,1,0,0,0
+zw_mine.access_mine_rate,access_mine_rate,zw_mine.model_mine_rate,base.group_user,1,0,0,0

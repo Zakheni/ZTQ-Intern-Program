@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_mine_form" model="ir.ui.view">
+            <field name="name">mine.mine.form</field>
+            <field name="model">mine.mine</field>
+            <field name="arch" type="xml">
+                <form string="Mine">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="vat_number"/>
+                            <field name="mine_code"/>
+                            <field name="sawis_number"/>
+                            <field name="physical_address"/>
+                            <field name="postal_address"/>
+                            <field name="contact_name"/>
+                            <field name="contact_number"/>
+                            <field name="contact_email"/>
+                            <field name="longitude"/>
+                            <field name="latitude"/>
+                        </group>
+                        <notebook>
+                            <page string="Waste Collection Areas">
+                                <field name="waste_collection_area_ids"/>
+                            </page>
+                            <page string="Rates">
+                                <field name="rate_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_mine_tree" model="ir.ui.view">
+            <field name="name">mine.mine.tree</field>
+            <field name="model">mine.mine</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="mine_code"/>
+                    <field name="sawis_number"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_waste_collection_area_tree" model="ir.ui.view">
+            <field name="name">waste.collection.area.tree</field>
+            <field name="model">waste.collection.area</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_waste_collection_area_form" model="ir.ui.view">
+            <field name="name">waste.collection.area.form</field>
+            <field name="model">waste.collection.area</field>
+            <field name="arch" type="xml">
+                <form string="Waste Collection Area">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_mine_rate_tree" model="ir.ui.view">
+            <field name="name">mine.rate.tree</field>
+            <field name="model">mine.rate</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="rate_type"/>
+<!--                    <field name="unit_price"/>-->
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+<!--                    <field name="waste_type_id"/>-->
+                    <field name="mine_id"/>
+                    <field name="item_code_id"/>
+<!--                    <field name="status"/>-->
+                </tree>
+            </field>
+        </record>
+        <record id="view_mine_rate_form" model="ir.ui.view">
+            <field name="name">mine.rate.form</field>
+            <field name="model">mine.rate</field>
+            <field name="arch" type="xml">
+                <form string="Mine Rate">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rate_type"/>
+<!--                            <field name="unit_price"/>-->
+<!--                            <field name="start_date"/>-->
+                            <field name="end_date"/>
+<!--                            <field name="waste_type_id"/>-->
+                            <field name="mine_id"/>
+                            <field name="item_code_id"/>
+<!--                            <field name="status"/>-->
+                        </group>
+                        <notebook>
+                            <page string="Customer Rates">
+<!--                                <field name="customer_rate_ids"/>-->
+                            </page>
+                            <page string="Invoice Rates">
+<!--                                <field name="invoice_rate_ids"/>-->
+                            </page>
+                            <page string="Manifest Rates">
+<!--                                <field name="manifest_rate_ids"/>-->
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mine" model="ir.actions.act_window">
+            <field name="name">Mines</field>
+            <field name="res_model">mine.mine</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_mine_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create your first mine</p>
+            </field>
+        </record>
+        <record id="action_waste_collection_area" model="ir.actions.act_window">
+            <field name="name">Waste Collection Areas</field>
+            <field name="res_model">waste.collection.area</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_waste_collection_area_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create your first waste collection area</p>
+            </field>
+        </record>
+        <record id="action_mine_rate" model="ir.actions.act_window">
+            <field name="name">Mine Rates</field>
+            <field name="res_model">mine.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_mine_rate_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create your first mine rate</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_zw_mine_root" name="Mine Management" sequence="60" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_mine_mines" name="Mines" parent="menu_zw_mine_root" action="action_mine" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_mine_areas" name="Waste Collection Areas" parent="menu_zw_mine_root" action="action_waste_collection_area" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_mine_rates" name="Mine Rates" parent="menu_zw_mine_root" action="action_mine_rate" groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <menuitem id="menu_zw_user_root" name="Zi-Waste User Management" sequence="90" groups="zw_user.group_depot_admin"/>
+    <menuitem id="menu_zw_user_users" name="Users" parent="menu_zw_user_root" action="ir.actions.act_window" 
+              res_model="res.users" view_mode="tree,form" views="[(ref('view_users_tree_zw_user'), 'tree'), (ref('view_users_form_zw_user'), 'form')]" 
+              groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

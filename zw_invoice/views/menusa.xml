@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <menuitem id="menu_zw_invoice_management_root" name="Zi-Waste Invoice Management" sequence="80" groups="zw_user.group_finance_admin"/>
+    <menuitem id="menu_zw_invoice_management_invoices" name="Invoices" parent="menu_zw_invoice_management_root" action="ir.actions.act_window" 
+              res_model="account.move" view_mode="tree,form" views="[(ref('view_account_move_tree_zw_invoice'), 'tree'), (ref('view_account_move_form_zw_invoice'), 'form')]" 
+              groups="zw_user.group_finance_admin"/>
+    </data>
+</odoo>

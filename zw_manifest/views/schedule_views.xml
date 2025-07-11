@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_waste_schedule_form" model="ir.ui.view">
+            <field name="name">waste.schedule.form</field>
+            <field name="model">waste.schedule</field>
+            <field name="arch" type="xml">
+                <form string="Waste Schedule">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="customer_id"/>
+                            <field name="mine_id"/>
+                            <field name="waste_type_id"/>
+                            <field name="scheduled_date"/>
+                            <field name="status"/>
+                            <field name="manifest_id"/>
+                            <field name="notes"/>
+                        </group>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': [('status', '!=', 'pending')]}"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_waste_schedule_tree" model="ir.ui.view">
+            <field name="name">waste.schedule.tree</field>
+            <field name="model">waste.schedule</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="scheduled_date"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_waste_schedule_calendar" model="ir.ui.view">
+            <field name="name">waste.schedule.calendar</field>
+            <field name="model">waste.schedule</field>
+            <field name="arch" type="xml">
+                <calendar date_start="scheduled_date" color="status">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="action_waste_schedule" model="ir.actions.act_window">
+            <field name="name">Waste Schedules</field>
+            <field name="res_model">waste.schedule</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{'default_status': 'pending'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create your first waste collection schedule</p>
+            </field>
+        </record>
+        <record id="action_schedule_calendar" model="ir.actions.act_window">
+            <field name="name">Schedule Calendar</field>
+            <field name="res_model">waste.schedule</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="view_id" ref="view_waste_schedule_calendar"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">View waste schedules in calendar</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_zw_manifest_root" name="Waste Manifest" sequence="50"/>
+        <menuitem id="menu_zw_manifest_schedules" name="Schedules" parent="menu_zw_manifest_root" action="action_waste_schedule" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_zw_manifest_calendar" name="Schedule Calendar" parent="menu_zw_manifest_root" action="action_schedule_calendar" groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_disposal_site_public,access_disposal_site_public,model_disposal_site,base.group_public,1,0,0,0
+access_waste_type_public,access_waste_type_public,model_waste_type,base.group_public,1,0,0,0

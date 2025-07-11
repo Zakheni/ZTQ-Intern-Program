@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="waste_type_general" model="waste.type">
+        <field name="name">General Waste</field>
+    </record>
+    <record id="waste_type_hazardous" model="waste.type">
+        <field name="name">Hazardous Waste</field>
+    </record>
+</odoo>

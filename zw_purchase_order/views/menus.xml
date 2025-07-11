@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <menuitem id="menu_zw_purchase_order_root" name="Zi-Waste Purchase Order" sequence="70" groups="zw_user.group_depot_admin"/>
+    <menuitem id="menu_zw_purchase_order_orders" name="Purchase Orders" parent="menu_zw_purchase_order_root" action="ir.actions.act_window" 
+              res_model="zi.purchase.order" view_mode="tree,form" views="[(ref('view_purchase_order_tree'), 'tree'), (ref('view_purchase_order_form'), 'form')]" 
+              groups="zw_user.group_depot_admin"/>
+    </data>
+</odoo>

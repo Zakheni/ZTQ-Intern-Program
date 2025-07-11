@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="seq_waste_schedule" model="ir.sequence">
+        <field name="name">Waste Schedule Sequence</field>
+        <field name="code">waste.schedule</field>
+        <field name="prefix">SCH/</field>
+        <field name="padding">6</field>
+    </record>
+</odoo>

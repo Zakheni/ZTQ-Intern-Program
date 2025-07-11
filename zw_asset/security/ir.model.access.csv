@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_quant_depot_admin,access_stock_quant_depot_admin,model_stock_quant,zw_user.group_depot_admin,1,1,1,1
+access_bin_audit_depot_admin,access_bin_audit_depot_admin,model_bin_audit,zw_user.group_depot_admin,1,1,1,1
+access_fleet_vehicle_fleet_controller,access_fleet_vehicle_fleet_controller,model_fleet_vehicle,zw_user.group_fleet_controller,1,1,1,1
+access_fleet_vehicle_inspection_driver,access_fleet_vehicle_inspection_driver,model_fleet_vehicle_inspection,zw_user.group_driver,1,1,1,1
+access_fleet_vehicle_log_driver,access_fleet_vehicle_log_driver,model_fleet_vehicle_log,zw_user.group_driver,1,1,1,1
