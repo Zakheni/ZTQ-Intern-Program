@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <data>
-    <menuitem id="menu_zw_item_codes_root" name="Zi-Waste Item Codes" sequence="40" groups="zw_user.group_depot_admin"/>
-    <menuitem id="menu_zw_item_codes_codes" name="Item Codes" parent="menu_zw_item_codes_root" action="ir.actions.act_window" 
-              res_model="item.code" view_mode="tree,form" views="[(ref('view_item_code_tree'), 'tree'), (ref('view_item_code_form'), 'form')]" 
-              groups="zw_user.group_depot_admin"/>
-    </data>
-</odoo>
