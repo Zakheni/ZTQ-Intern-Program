@@ -18,9 +18,16 @@ class WasteSchedule(models.Model):
     ], string='Status', default='pending')
     manifest_id = fields.Many2one('waste.manifest', string='Manifest')
     notes = fields.Text(string='Notes')
+    route_status = fields.Char(string='Route Status', compute='_compute_route_status')
+
+    @api.depends('manifest_id')
+    def _compute_route_status(self):
+        for record in self:
+            record.route_status = record.manifest_id.route_distance or 'No Route'
 
     @api.constrains('scheduled_date')
     def _check_date(self):
+
         for record in self:
             if record.scheduled_date < fields.Date.today():
                 raise ValidationError("Scheduled date cannot be in the past!")

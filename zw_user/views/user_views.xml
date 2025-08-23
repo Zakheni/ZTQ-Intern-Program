@@ -1,43 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
-        <record id="view_users_form_zw_user" model="ir.ui.view">
+        <record id="res.users.form.zw_user" model="ir.ui.view">
             <field name="name">res.users.form.zw_user</field>
             <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//sheet" position="inside">
-                    <group string="Zi-Waste User Details">
-                        <field name="custom_role"/>
-                    </group>
-                </xpath>
+                <form string="Zi-Waste User">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="custom_role"/>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
-        <record id="view_users_tree_zw_user" model="ir.ui.view">
+
+        <record id="res.users.tree.zw_user" model="ir.ui.view">
             <field name="name">res.users.tree.zw_user</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Zi-Waste Users">
                     <field name="name"/>
-                    <field name="email"/>
                     <field name="custom_role"/>
                 </tree>
             </field>
         </record>
-        <record id="view_users_search_zw_user" model="ir.ui.view">
+
+        <record id="res.users.search.zw_user" model="ir.ui.view">
             <field name="name">res.users.search.zw_user</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
-                <search>
+                <search string="Zi-Waste Users">
                     <field name="name"/>
-                    <field name="email"/>
-                    <filter string="Depot Admins" name="depot_admins" domain="[('groups_id', 'in', [ref('zw_user.group_depot_admin')])]"/>
+                    <field name="custom_role"/>
+                    <filter string="Depot Admin" name="depot_admin" domain="[('custom_role', '=', 'depot_admin')]"/>
+                    <filter string="Driver" name="driver" domain="[('custom_role', '=', 'driver')]"/>
                 </search>
             </field>
         </record>
 
-        <record id="action_zw_users" model="ir.actions.act_window">
+        <record id="action_users" model="ir.actions.act_window">
             <field name="name">Zi-Waste Users</field>
             <field name="res_model">res.users</field>
             <field name="view_mode">tree,form</field>
@@ -47,7 +49,9 @@
             </field>
         </record>
 
-        <menuitem id="menu_zw_user_root" name="Zi-Waste User Management" sequence="100" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_user_users" name="Zi-Waste Users" parent="menu_zw_user_root" action="action_zw_users" groups="zw_user.group_depot_admin" sequence="10"/>
+        <menuitem id="menu_users" name="Users" action="action_users" groups="zw_user.group_depot_admin,zw_user.group_depot_manager"/>
+        <menuitem id="menu_fleet" name="Fleet" action="zw_asset.action_zi_waste_fleet" groups="zw_user.group_fleet_controller"/>
+        <menuitem id="menu_invoices" name="Invoices" action="zw_invoice.action_invoices" groups="zw_user.group_finance_admin,zw_user.group_finance_manager"/>
+        <menuitem id="menu_manifests" name="Manifests" action="zw_manifest.action_waste_manifests" groups="zw_user.group_driver,zw_user.group_fleet_controller"/>
     </data>
 </odoo>

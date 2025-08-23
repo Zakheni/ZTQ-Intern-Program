@@ -1,152 +1,165 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
-        <record id="view_mine_form" model="ir.ui.view">
-            <field name="name">mine.mine.form</field>
+        <record id="zw_mine.mine_form" model="ir.ui.view">
+            <field name="name">zw_mine.mine_form</field>
             <field name="model">mine.mine</field>
             <field name="arch" type="xml">
                 <form string="Mine">
-                    <sheet>
-                        <group>
-                            <field name="name"/>
-                            <field name="vat_number"/>
-                            <field name="mine_code"/>
-                            <field name="sawis_number"/>
-                            <field name="physical_address"/>
-                            <field name="postal_address"/>
-                            <field name="contact_name"/>
-                            <field name="contact_number"/>
-                            <field name="contact_email"/>
-                            <field name="longitude"/>
-                            <field name="latitude"/>
-                        </group>
+                <sheet>
+                    <group>
+
+                        <field name="customer_id" widget="many2one" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="name"/>
+                        <field name="mine_code" readonly="1"/>
+                        <field name="vat_number"/>
+                        <field name="sawis_number"/>
+                        <field name="physical_address"/>
+                        <field name="postal_address"/>
+                        <field name="contact_name" invisible="1"/>
+                        <field name="contact_number"/>
+                        <field name="contact_email"/>
+                        <field name="longitude"/>
+                        <field name="latitude"/>
+                    </group>
                         <notebook>
                             <page string="Waste Collection Areas">
                                 <field name="waste_collection_area_ids"/>
                             </page>
                             <page string="Rates">
-                                <field name="rate_ids"/>
+                                <field name="rate_ids">
+                                    <tree>
+                                        <field name="item_code_id"/>
+<!--                                        <field name="rate_type"/>-->
+                                        <field name="fixed_rate"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Disposal Sites">
+                                <field name="disposal_site_ids"/>
                             </page>
                         </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-        <record id="view_mine_tree" model="ir.ui.view">
-            <field name="name">mine.mine.tree</field>
+
+        <record id="zw_mine.mine_tree" model="ir.ui.view">
+            <field name="name">zw_mine.mine_tree</field>
             <field name="model">mine.mine</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Mines">
                     <field name="name"/>
                     <field name="mine_code"/>
-                    <field name="sawis_number"/>
+<!--                    <field name="customer_id"/>-->
+                    <field name="contact_name"/>
                 </tree>
             </field>
         </record>
-        <record id="view_waste_collection_area_tree" model="ir.ui.view">
-            <field name="name">waste.collection.area.tree</field>
+
+        <record id="zw_mine.waste_collection_area_tree" model="ir.ui.view">
+            <field name="name">zw_mine.waste_collection_area_tree</field>
             <field name="model">waste.collection.area</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Waste Collection Areas">
                     <field name="name"/>
+                    <field name="mine_id"/>
                 </tree>
             </field>
         </record>
-        <record id="view_waste_collection_area_form" model="ir.ui.view">
-            <field name="name">waste.collection.area.form</field>
+
+        <record id="zw_mine.waste_collection_area_form" model="ir.ui.view">
+            <field name="name">zw_mine.waste_collection_area_form</field>
             <field name="model">waste.collection.area</field>
             <field name="arch" type="xml">
                 <form string="Waste Collection Area">
                     <sheet>
                         <group>
                             <field name="name"/>
+                            <field name="mine_id"/>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
-        <record id="view_mine_rate_tree" model="ir.ui.view">
-            <field name="name">mine.rate.tree</field>
+
+        <record id="zw_mine.mine_rate_tree" model="ir.ui.view">
+            <field name="name">zw_mine.mine_rate_tree</field>
             <field name="model">mine.rate</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/>
-                    <field name="rate_type"/>
-<!--                    <field name="unit_price"/>-->
-                    <field name="start_date"/>
-                    <field name="end_date"/>
-<!--                    <field name="waste_type_id"/>-->
-                    <field name="mine_id"/>
+                <tree string="Mine Rates">
                     <field name="item_code_id"/>
-<!--                    <field name="status"/>-->
+<!--                    <field name="rate_type"/>-->
+                    <field name="fixed_rate"/>
+                    <field name="waste_type"/>
+                    <field name="disposal_site_id"/>
                 </tree>
             </field>
         </record>
-        <record id="view_mine_rate_form" model="ir.ui.view">
-            <field name="name">mine.rate.form</field>
+
+        <record id="zw_mine.mine_rate_form" model="ir.ui.view">
+            <field name="name">zw_mine.mine_rate_form</field>
             <field name="model">mine.rate</field>
             <field name="arch" type="xml">
                 <form string="Mine Rate">
                     <sheet>
                         <group>
-                            <field name="name"/>
-                            <field name="rate_type"/>
-<!--                            <field name="unit_price"/>-->
-<!--                            <field name="start_date"/>-->
-                            <field name="end_date"/>
-<!--                            <field name="waste_type_id"/>-->
                             <field name="mine_id"/>
                             <field name="item_code_id"/>
-<!--                            <field name="status"/>-->
+<!--                            <field name="rate_type"/>-->
+                            <field name="bin_rate"/>
+                            <field name="km_rate"/>
+                            <field name="load_rate"/>
+                            <field name="fixed_rate"/>
+                            <field name="tonnage"/>
+                            <field name="rental_rate"/>
+                            <field name="labour_cost"/>
+                            <field name="management_fee"/>
+                            <field name="escalation_rate"/>
+                            <field name="discount"/>
+                            <field name="vat"/>
+                            <field name="waste_type"/>
+                            <field name="waste_details"/>
+                            <field name="disposal_site_id"/>
+                            <field name="bin_volume_type"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
                         </group>
-                        <notebook>
-                            <page string="Customer Rates">
-<!--                                <field name="customer_rate_ids"/>-->
-                            </page>
-                            <page string="Invoice Rates">
-<!--                                <field name="invoice_rate_ids"/>-->
-                            </page>
-                            <page string="Manifest Rates">
-<!--                                <field name="manifest_rate_ids"/>-->
-                            </page>
-                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <record id="action_mine" model="ir.actions.act_window">
+        <record id="action_mines" model="ir.actions.act_window">
             <field name="name">Mines</field>
             <field name="res_model">mine.mine</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_mine_tree"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create your first mine</p>
             </field>
         </record>
-        <record id="action_waste_collection_area" model="ir.actions.act_window">
+
+        <record id="action_waste_collection_areas" model="ir.actions.act_window">
             <field name="name">Waste Collection Areas</field>
             <field name="res_model">waste.collection.area</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_waste_collection_area_tree"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create your first waste collection area</p>
             </field>
         </record>
-        <record id="action_mine_rate" model="ir.actions.act_window">
+
+        <record id="action_mine_rates" model="ir.actions.act_window">
             <field name="name">Mine Rates</field>
             <field name="res_model">mine.rate</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_mine_rate_tree"/>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create your first mine rate</p>
             </field>
         </record>
 
-        <menuitem id="menu_zw_mine_root" name="Mine Management" sequence="60" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_mine_mines" name="Mines" parent="menu_zw_mine_root" action="action_mine" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_mine_areas" name="Waste Collection Areas" parent="menu_zw_mine_root" action="action_waste_collection_area" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_mine_rates" name="Mine Rates" parent="menu_zw_mine_root" action="action_mine_rate" groups="zw_user.group_depot_admin"/>
+        <menuitem id="menu_mine_management_root" name="Waste Mine Management"/>
+        <menuitem id="menu_mines" name="Mines" parent="menu_mine_management_root" action="action_mines"/>
+        <menuitem id="menu_waste_collection_areas" name="Waste Collection Areas" parent="menu_mine_management_root" action="action_waste_collection_areas"/>
+        <menuitem id="menu_mine_rates" name="Mine Rates" parent="menu_mine_management_root" action="action_mine_rates"/>
     </data>
 </odoo>

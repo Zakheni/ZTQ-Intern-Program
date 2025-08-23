@@ -1,0 +1,14 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="waste_type_combustible" model="waste.type">
+            <field name="name">combustible</field>
+        </record>
+        <record id="waste_type_non_combustible" model="waste.type">
+            <field name="name">non_combustible</field>
+        </record>
+        <record id="waste_type_hazardous" model="waste.type">
+            <field name="name">hazardous</field>
+        </record>
+    </data>
+</odoo>

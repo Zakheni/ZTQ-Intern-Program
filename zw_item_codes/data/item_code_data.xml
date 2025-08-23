@@ -18,12 +18,6 @@
         <field name="unit">ZAR/ton</field>
         <field name="rate_type">disposal</field>
     </record>
-    <record id="item_code_disposal_fixed" model="item.code">
-        <field name="code">DSP-FIXED</field>
-        <field name="description">Fixed disposal fee</field>
-        <field name="unit">ZAR</field>
-        <field name="rate_type">disposal</field>
-    </record>
     <record id="item_code_rental_bin" model="item.code">
         <field name="code">RNT-BIN</field>
         <field name="description">Bin rental cost</field>

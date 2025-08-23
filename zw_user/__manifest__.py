@@ -1,7 +1,8 @@
 {
-    'name': 'Zi-Waste User Management',
+    'name': 'Waste User Management',
     'version': '1.0',
     'summary': 'User Management for Zi-Waste',
+    'author':'Victor',
     'depends': ['base'],
     'data': [
         'security/zw_user_security.xml',

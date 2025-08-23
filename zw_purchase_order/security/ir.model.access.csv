@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_purchase_order_depot_admin,access_purchase_order_depot_admin,model_zi_purchase_order,zw_user.group_depot_admin,1,1,1,1
+access_purchase_order_depot_admin,access_purchase_order_depot_admin,model_purchase_order,zw_user.group_depot_admin,1,1,1,1

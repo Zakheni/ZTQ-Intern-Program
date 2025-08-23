@@ -1,77 +1,148 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
 
         <record id="view_purchase_order_form" model="ir.ui.view">
-            <field name="name">zi.purchase.order.form</field>
-            <field name="model">zi.purchase.order</field>
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="priority" eval="99"/>
             <field name="arch" type="xml">
-                <form string="Purchase Order">
-                    <sheet>
-                        <group>
-                            <field name="po_number"/>
-                            <field name="vendor_number"/>
-                            <field name="mine_id"/>
-                            <field name="customer_id"/>
-                            <field name="bin_total"/>
-                            <field name="bin_in_use"/>
-                            <field name="bin_not_in_use"/>
-                            <field name="start_date"/>
-                            <field name="end_date"/>
-                        </group>
-                    </sheet>
-                </form>
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_planned']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_ref']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//sheet" position="inside">
+                    <group string="Order Information">
+                        <field name="po_number" readonly="1"/>
+                        <field name="partner_id" string="Vendor" invisible="1" required="0"/>
+                    </group>
+
+                    <group string="Mine Information">
+                        <field name="mine_id"/>
+                        <field name="customer_id" readonly="1"/>
+                    </group>
+
+                    <group string="Services">
+                        <field name="item_code_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': true}"/>
+                        <field name="rate_type" readonly="1" required ="0" invisible="1"/>
+                    </group>
+
+                    <group string="Service Period">
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+
+                    <group string="Rental Details" attrs="{'invisible': [('is_rental', '=', False)]}">
+                        <field name="rental_type" attrs="{'required': [('is_rental', '=', True)]}"/>
+                        <field name="bin_total" attrs="{'required': [('is_rental', '=', True)]}"/>
+                        <field name="bin_in_use" widget="many2many_tags" attrs="{'required': [('is_rental', '=', True)]}"/>
+                        <field name="bin_not_in_use" readonly="1"/>
+                    </group>
+
+                    <group string="Disposal Details" attrs="{'invisible': [('is_disposal', '=', False)]}">
+                        <field name="waste_type_ids" widget="many2many_tags" attrs="{'required': [('is_disposal', '=', True)]}"/>
+                        <field name="disposal_site_ids" widget="many2many_tags" attrs="{'required': [('is_disposal', '=', True)]}"/>
+                    </group>
+                    <field name="is_rental" invisible="1"/>
+                    <field name="is_disposal" invisible="1"/>
+                </xpath>
             </field>
         </record>
+
+
         <record id="view_purchase_order_tree" model="ir.ui.view">
-            <field name="name">zi.purchase.order.tree</field>
-            <field name="model">zi.purchase.order</field>
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="priority" eval="99"/>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="po_number"/>
-                    <field name="mine_id"/>
-                    <field name="bin_total"/>
-                    <field name="customer_id"/>
-                    <field name="start_date"/>
-                </tree>
+                <xpath expr="//tree" position="replace">
+                    <tree string="Purchase Orders">
+                        <field name="po_number" string="Purchase Number"/>
+                        <field name="mine_id" string="Mine"/>
+                        <field name="item_code_ids" string="Item Codes" widget="many2many_tags"/>
+                        <field name="start_date" string="Start Date"/>
+                        <field name="end_date" string="End Date"/>
+                        <field name="bin_total" string="Bin Total" invisible="1" required="0"/>
+                        <field name="bin_in_use" string="Bins in Use" widget="many2many_tags" invisible="1" required="0"/>
+                        <field name="waste_type_ids" string="Waste Types" widget="many2many_tags" invisible="1" required="0"/>
+                        <field name="disposal_site_ids" string="Disposal Sites" widget="many2many_tags" invisible="1" required="0"/>
+                    </tree>
+                </xpath>
             </field>
         </record>
+
+
         <record id="view_purchase_order_search" model="ir.ui.view">
-            <field name="name">zi.purchase.order.search</field>
-            <field name="model">zi.purchase.order</field>
+            <field name="name">purchase.order.search</field>
+            <field name="model">purchase.order</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="po_number"/>
-                    <field name="vendor_number"/>
                     <field name="mine_id"/>
-                    <field name="customer_id"/>
                     <filter string="Active" name="active" domain="[('end_date', '>=', datetime.date.today())]"/>
-                    <filter string="Expired" name="expired" domain="[('end_date', '<', datetime.date.today())]"/>
+                    <filter string="Expired" name="expired" domain="[('end_date', '&lt;', datetime.date.today())]"/>
                 </search>
             </field>
         </record>
-        <record id="view_purchase_order_graph" model="ir.ui.view">
-            <field name="name">zi.purchase.order.graph</field>
-            <field name="model">zi.purchase.order</field>
-            <field name="arch" type="xml">
-                <graph type="bar">
-                    <field name="mine_id"/>
-                    <field name="bin_total" type="measure"/>
-                </graph>
-            </field>
-        </record>
 
-        <record id="action_purchase_order" model="ir.actions.act_window">
-            <field name="name">Purchase Orders</field>
-            <field name="res_model">zi.purchase.order</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="context">{'default_bin_in_use': 0, 'default_bin_not_in_use': 0}</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Create purchase  your order</p>
-            </field>
-        </record>
 
-        <menuitem id="menu_zw_purchase_order_root" name="Zi-Waste Purchase Order" sequence="70" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_purchase_order_orders" name="Purchase Orders" parent="menu_zw_purchase_order_root" action="action_purchase_order" groups="zw_user.group_depot_admin"/>
+<record id="action_purchase_order" model="ir.actions.act_window">
+    <field name="name">Purchase Orders</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_mode">tree,form,graph</field>
+    <field name="view_id" ref="view_purchase_order_tree"/>
+    <field name="context">
+        {
+            'default_po_number': 'New',
+            'default_vendor_number': 'New',
+            'default_bin_in_use': [],
+            'default_bin_not_in_use': 0,
+            'default_waste_type_ids': [],
+            'default_disposal_site_ids': []
+        }
+    </field>
+</record>
+
+
+        <menuitem id="menu_zw_purchase_order_root" name="Waste Purchase Order" sequence="70"
+                 groups="zw_user.group_depot_admin,zw_user.group_depot_manager"/>
+        <menuitem id="menu_zw_purchase_order_orders" name="Purchase Orders"
+                 parent="menu_zw_purchase_order_root" action="action_purchase_order"
+                 groups="zw_user.group_depot_admin,zw_user.group_depot_manager"/>
     </data>
 </odoo>

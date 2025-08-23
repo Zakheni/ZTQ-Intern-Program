@@ -1,59 +1,130 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
-
-        <record id="view_manifest_form" model="ir.ui.view">
-            <field name="name">waste.manifest.form</field>
-            <field name="model">waste.manifest</field>
-            <field name="arch" type="xml">
-                <form string="Waste Manifest">
-                    <sheet>
+    <record id="waste_manifest_form" model="ir.ui.view">
+        <field name="name">waste.manifest.form</field>
+        <field name="model">waste.manifest</field>
+        <field name="arch" type="xml">
+            <form string="Waste Manifest">
+                <sheet>
+                    <group>
                         <group>
-                            <field name="manifest_id"/>
+                            <field name="manifest_ids" readonly="1"/>
+                            <field name="customer_id"
+                                   widget="many2one"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   context="{'search_default_customer': 1}"/>
+                            <field name="mine_id"
+                                   required="1"
+                                   readonly="1"
+                                   attrs="{'invisible': [('customer_id', '=', False)]}"/>
+                            <field name="disposal_site_id"
+                                   required="1"
+                                   readonly="1"
+                                   attrs="{'invisible': [('mine_id', '=', False)]}"/>
+                            <field name="sawis_number" required="1" readonly="1"/>
+                        </group>
+                        <group>
                             <field name="waste_type_id"/>
+                            <field name="bin_size_id" attrs="{'invisible': [('has_rental_service', '=', False)]}"/>
                             <field name="tonnage"/>
                             <field name="dt_number"/>
                             <field name="un_sin_code"/>
                             <field name="status"/>
-                            <field name="customer_id"/>
-                            <field name="mine_id"/>
-                            <field name="disposal_site_id"/>
                             <field name="driver_id"/>
-                            <field name="weighbridge_receipt"/>
-                            <field name="safe_disposal_certificate"/>
-                            <field name="signature_mine"/>
-                            <field name="signature_driver"/>
                         </group>
-                        <button name="action_advance_status" string="Advance Status" type="object" class="oe_highlight"/>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        <record id="view_manifest_tree" model="ir.ui.view">
-            <field name="name">waste.manifest.tree</field>
-            <field name="model">waste.manifest</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="manifest_id"/>
-                    <field name="waste_type_id"/>
-                    <field name="status"/>
-                    <field name="customer_id"/>
-                    <field name="mine_id"/>
-                </tree>
-            </field>
-        </record>
+                        <group>
+                            <field name="weighbridge_receipt" widget="binary"/>
+                            <field name="safe_disposal_certificate" widget="binary"/>
+                            <field name="signature_mine" widget="binary"/>
+                            <field name="signature_driver" widget="binary"/>
+                            <field name="vehicle_id" required="1"/>
+                            <field name="item_code_ids"
+                                   widget="many2many_tags"
+                                   attrs="{'invisible': [('mine_id', '=', False)]}"
+                                   context="{'search_default_mine_item_codes': 1}"/>
+                        </group>
+                    </group>
 
-        <record id="action_manifest" model="ir.actions.act_window">
-            <field name="name">Manifests</field>
-            <field name="res_model">waste.manifest</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_manifest_tree"/>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Create your first waste manifest</p>
-            </field>
-        </record>
+                    <field name="has_transport_service" invisible="1"/>
+                    <field name="has_disposal_service" invisible="1"/>
+                    <field name="has_rental_service" invisible="1"/>
+                    <field name="has_labour_service" invisible="1"/>
 
-        <menuitem id="menu_zw_manifest_root" name="Waste Manifest" sequence="50"/>
-        <menuitem id="menu_zw_manifest_manifests" name="Manifests" parent="menu_zw_manifest_root" action="action_manifest" groups="zw_user.group_depot_admin,zw_user.group_driver"/>
-    </data>
+
+                    <group string="Service Details">
+                        <group>
+                            <field name="duration_unit" attrs="{'invisible': [('has_rental_service', '=', False), ('has_labour_service', '=', False)]}"/>
+                        </group>
+
+
+                        <group string="Transport Details" attrs="{'invisible': [('has_transport_service', '=', False)]}">
+                            <field name="transport_distance"/>
+                        </group>
+
+
+                        <group string="Disposal Details" attrs="{'invisible': [('has_disposal_service', '=', False)]}">
+                            <field name="disposal_tonnage"/>
+                        </group>
+
+
+                        <group string="Rental Details" attrs="{'invisible': [('has_rental_service', '=', False)]}">
+                            <field name="rental_duration"/>
+                        </group>
+
+
+                        <group string="Labour Details" attrs="{'invisible': [('has_labour_service', '=', False)]}">
+                            <field name="labour_hours"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="waste_manifest_tree" model="ir.ui.view">
+        <field name="name">waste.manifest.tree</field>
+        <field name="model">waste.manifest</field>
+        <field name="arch" type="xml">
+            <tree string="Waste Manifests">
+                <field name="manifest_ids"/>
+                <field name="waste_type_id"
+                    options="{'no_create': True, 'no_open': True}"
+                    context="{'default_name': 'non_combustible'}"
+                />
+                <field name="status"/>
+                <field name="customer_id"/>
+                <field name="mine_id"/>
+                <field name="disposal_site_id"/>
+                <field name="item_code_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="waste_manifest_search" model="ir.ui.view">
+        <field name="name">waste.manifest.search</field>
+        <field name="model">waste.manifest</field>
+        <field name="arch" type="xml">
+            <search string="Waste Manifests">
+                <field name="manifest_ids"/>
+                <field name="customer_id"/>
+                <field name="mine_id"/>
+                <field name="disposal_site_id"/>
+                <field name="waste_type_id"/>
+                <filter string="Booked" name="booked" domain="[('status', '=', 'booked')]"/>
+                <filter string="Generated" name="generated" domain="[('status', '=', 'generated')]"/>
+                <filter string="Delivered" name="delivered" domain="[('status', '=', 'delivered')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_waste_manifests" model="ir.actions.act_window">
+        <field name="name">Waste Manifests</field>
+        <field name="res_model">waste.manifest</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_status': 'booked'}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create a new waste manifest</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_waste_manifests" name="Waste Manifests" action="action_waste_manifests"/>
 </odoo>

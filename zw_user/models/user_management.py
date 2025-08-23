@@ -16,7 +16,7 @@ class ResUsers(models.Model):
 
     def write(self, vals):
         if 'password' in vals:
-            vals['password'] = hashlib.sha256(vals['password'].encode()).hexdigest()  # AES-256 placeholder
+            vals['password'] = hashlib.sha256(vals['password'].encode()).hexdigest()
         res = super(ResUsers, self).write(vals)
         self.env['audit.log'].create({
             'model_name': 'res.users',

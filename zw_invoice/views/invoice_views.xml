@@ -1,51 +1,137 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- View Definitions -->
-        <record id="view_account_move_form_zw_invoice" model="ir.ui.view">
-            <field name="name">account.move.form.zw_invoice</field>
-            <field name="model">account.move</field>
-            <field name="inherit_id" ref="account.view_move_form"/>
+
+        <record id="view_waste_invoice_form" model="ir.ui.view">
+            <field name="name">waste.invoice.form</field>
+            <field name="model">waste.invoice</field>
             <field name="arch" type="xml">
-                <xpath expr="//sheet" position="inside">
-                    <group string="Zi-Waste Invoice Details">
-                        <field name="manifest_id"/>
-                        <field name="mine_id"/>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="state"/>
-                    </group>
-                </xpath>
-<!--                <xpath expr="//div[@name='buttons']" position="inside">-->
-<!--                    <button name="action_authorize" string="Authorize" type="object" class="oe_highlight" attrs="{'invisible': [('state', 'not in', ['draft', 'pro_forma'])]}"/>-->
-<!--                    <button name="action_reject" string="Reject" type="object" attrs="{'invisible': [('state', 'not in', ['draft', 'pro_forma'])]}"/>-->
-<!--                    <button name="action_fix" string="Fix" type="object" attrs="{'invisible': [('state', '=', 'posted')]}"/>-->
-<!--                </xpath>-->
+                <form string="Waste Invoice">
+                    <header>
+                        <button name="action_post" type="object" string="Post" class="oe_highlight" states="draft"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="posted,draft"/>
+                        <button name="action_draft" type="object" string="Set to Draft" states="cancelled"/>
+                        <button name="action_view_account_move" type="object" string="View Journal Entry" states="posted" class="oe_highlight" groups="account.group_account_user"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted,paid,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Invoice Details">
+                                <field name="invoice_date" required="1"/>
+                                <field name="invoice_date_due" required="1"/>
+                                <field name="payment_reference" readonly="1"/>
+                                <field name="mine_name" readonly="1"/>
+                                <field name="customer_id" required="1" domain="[('vat_number', '!=', False)]"/>
+                            </group>
+                            <group string="Manifest Details">
+                                <field name="mine_ids" widget="many2many_tags" required="1"/>
+                                <field name="manifest_ids" widget="many2many_tags"
+                                       domain="[('status','=','authorized')]"
+                                       options="{'no_create': True,'field': 'manifest_ids'}"
+
+                                       required="1"/>
+
+                                <field name="waste_type_id" readonly="0"/>
+                                <field name="has_transport_service" invisible="1"/>
+                                <field name="has_disposal_service" invisible="1"/>
+                                <field name="has_rental_service" invisible="1"/>
+                                <field name="has_labour_service" invisible="1"/>
+                                <field name="available_waste_type_ids" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Services">
+                                <field name="item_code_ids" widget="many2many_tags"/>
+                                <field name="bin_size_id"
+                                       attrs="{
+                                           'invisible': [('has_rental_service','=',False)],
+                                           'required': [('has_rental_service','=',True)]
+                                       }"
+                                       string="Bin Size"/>
+                                <field name="invoice_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="price_unit"/>
+                                        <field name="tax_ids" widget="many2many_tags"/>
+                                        <field name="price_subtotal"/>
+
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page string="Totals">
+                                <group>
+                                    <field name="total_amount_excl_tax" digits="[64,2]" readonly="1"/>
+                                    <field name="total_amount_incl_tax" digits="[64,2]" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
             </field>
         </record>
-        <record id="view_account_move_tree_zw_invoice" model="ir.ui.view">
-            <field name="name">account.move.tree.zw_invoice</field>
-            <field name="model">account.move</field>
+
+
+        <record id="view_waste_invoice_tree" model="ir.ui.view">
+            <field name="name">waste.invoice.tree</field>
+            <field name="model">waste.invoice</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Waste Invoices">
                     <field name="name"/>
-                    <field name="manifest_id"/>
-                    <field name="state"/>
+                    <field name="payment_reference"/>
+                    <field name="mine_name"/>
+                    <field name="invoice_date"/>
+
+                    <field name="state" widget="statusbar"/>
+                    <field name="total_amount_incl_tax"/>
                 </tree>
             </field>
         </record>
 
-        <record id="action_invoice" model="ir.actions.act_window">
-            <field name="name">Invoices</field>
-            <field name="res_model">account.move</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_account_move_tree_zw_invoice"/>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Create your first invoice</p>
+
+        <record id="view_waste_invoice_search" model="ir.ui.view">
+            <field name="name">waste.invoice.search</field>
+            <field name="model">waste.invoice</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Invoice Number"/>
+                    <field name="customer_id" string="Customer"/>
+                    <field name="state" string="Status"/>
+                    <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                    <filter string="Posted" name="posted" domain="[('state','=','posted')]"/>
+                    <filter string="Paid" name="paid" domain="[('state','=','paid')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
+                </search>
             </field>
         </record>
 
-        <menuitem id="menu_zw_invoice_management_root" name="Waste Invoice Management" sequence="80" groups="zw_user.group_finance_admin"/>
-        <menuitem id="menu_zw_invoice_management_invoices" name="Invoices" parent="menu_zw_invoice_management_root" action="action_invoice" groups="zw_user.group_finance_admin"/>
+
+        <record id="action_waste_invoices" model="ir.actions.act_window">
+            <field name="name">Waste Management Invoices</field>
+            <field name="res_model">waste.invoice</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_waste_invoice_tree"/>
+            <field name="search_view_id" ref="view_waste_invoice_search"/>
+            <field name="context">{'search_default_draft': 1}</field>
+        </record>
+
+
+        <menuitem id="menu_waste_management_root"
+                  name="Waste Management"
+                  sequence="100"
+                  web_icon="zw_invoice,static/description/icon.png"/>
+
+        <menuitem id="menu_waste_invoices"
+                  name="Invoices"
+                  parent="menu_waste_management_root"
+                  action="action_waste_invoices"
+                  sequence="10"/>
     </data>
 </odoo>

@@ -11,7 +11,10 @@ class DisposalSite(models.Model):
     contact_number = fields.Char(string='Contact Number')
     fax = fields.Char(string='Fax')
     sawis_number = fields.Char(string='SAWIS Number', required=True)
-    waste_type_ids = fields.Many2many('waste.type', string='Waste Types')
+
+
+
+
 
     @api.constrains('sawis_number')
     def _check_unique(self):
@@ -19,8 +22,3 @@ class DisposalSite(models.Model):
             if self.search([('sawis_number', '=', record.sawis_number), ('id', '!=', record.id)]):
                 raise ValidationError("SAWIS Number must be unique!")
 
-class WasteType(models.Model):
-    _name = 'waste.type'
-    _description = 'Waste Type'
-
-    name = fields.Char(string='Waste Type', required=True)

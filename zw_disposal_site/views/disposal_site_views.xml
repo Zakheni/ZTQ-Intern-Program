@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-
-        <record id="view_disposal_site_form" model="ir.ui.view">
+        <record id="zw_disposal_site.disposal_site_form" model="ir.ui.view">
             <field name="name">disposal.site.form</field>
             <field name="model">disposal.site</field>
             <field name="arch" type="xml">
@@ -15,34 +13,33 @@
                             <field name="contact_number"/>
                             <field name="fax"/>
                             <field name="sawis_number"/>
-                            <field name="waste_type_ids"/>
                         </group>
+
                     </sheet>
                 </form>
             </field>
         </record>
-        <record id="view_disposal_site_tree" model="ir.ui.view">
+
+        <record id="zw_disposal_site.disposal_site_tree" model="ir.ui.view">
             <field name="name">disposal.site.tree</field>
             <field name="model">disposal.site</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Disposal Sites">
                     <field name="name"/>
                     <field name="sawis_number"/>
                 </tree>
             </field>
         </record>
 
-        <record id="action_disposal_site" model="ir.actions.act_window">
+        <record id="zw_disposal_site.action_disposal_sites" model="ir.actions.act_window">
             <field name="name">Disposal Sites</field>
             <field name="res_model">disposal.site</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_disposal_site_tree"/>
             <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Create your first disposal site</p>
+                <p class="oe_view_nocontent_create">Create your disposal site</p>
             </field>
         </record>
 
-        <menuitem id="menu_zw_disposal_site_root" name="Waste Disposal Site" sequence="30" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_disposal_site_sites" name="Disposal Sites" parent="menu_zw_disposal_site_root" action="action_disposal_site" groups="zw_user.group_depot_admin"/>
+        <menuitem id="zw_disposal_site.menu_disposal_sites" name="Disposal Sites" action="zw_disposal_site.action_disposal_sites"/>
     </data>
 </odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_domain_wizard_form" model="ir.ui.view">
+        <field name="name">stock.domain.wizard.form</field>
+        <field name="model">stock.domain.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Assign Bin to Mine">
+                <group>
+                    <field name="bin_id" readonly="1"/>
+                    <field name="mine_id"/>
+                    <field name="assign_to_mine" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_domain_wizard" model="ir.actions.act_window">
+        <field name="name">Assign Bin to Mine</field>
+        <field name="res_model">stock.domain.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

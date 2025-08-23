@@ -1,48 +1,156 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
 
-        <record id="view_item_code_form" model="ir.ui.view">
-            <field name="name">item.code.form</field>
+        <record id="zw_item_codes.item_code_form" model="ir.ui.view">
+            <field name="name">zw_item_codes.item_code_form</field>
             <field name="model">item.code</field>
             <field name="arch" type="xml">
                 <form string="Item Code">
+                    <header>
+                        <button name="action_approve" string="Approve" type="object"
+                                class="oe_highlight" attrs="{'invisible': [('state', '=', 'approved')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <group>
-                            <field name="code"/>
-                            <field name="description"/>
-                            <field name="unit"/>
-                            <field name="rate_type"/>
-                            <field name="end_date"/>
+                            <field name="code" widget="selection" options="{'no_create_edit': True}"/>
+                            <field name="description" />
+                            <field name="unit" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="rate_type" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="base_rate" string="Base Rate"/>
+                            <field name="currency_id"/>
                         </group>
+
+                        <notebook>
+                            <page string="Rate Details">
+
+                                <group string="Adjustments" colspan="4">
+                                    <field name="escalation_rate"/>
+                                    <field name="discount"/>
+                                    <field name="vat"/>
+                                </group>
+
+
+                                <group string="Transport Rate Details" attrs="{'invisible': [('rate_type', '!=', 'transport')]}" colspan="4">
+                                    <field name="bin_rate"/>
+                                    <field name="km_rate"/>
+                                    <field name="load_rate"/>
+                                    <field name="fixed_rate"/>
+                                </group>
+
+
+                                <group string="Disposal Rate Details" attrs="{'invisible': [('rate_type', '!=', 'disposal')]}" colspan="4">
+                                    <field name="tonnage"/>
+                                    <field name="waste_type" attrs="{'required': [('rate_type', '=', 'disposal')]}"/>
+                                    <field name="waste_details"/>
+                                    <field name="disposal_site_id" attrs="{'required': [('rate_type', '=', 'disposal')]}"/>
+                                </group>
+
+
+                                <group string="Rental Rate Details" attrs="{'invisible': [('rate_type', '!=', 'rental')]}" colspan="4">
+                                    <field name="rental_rate"/>
+                                    <field name="bin_volume_type"/>
+                                </group>
+
+
+                                <group string="Labour Rate Details" attrs="{'invisible': [('rate_type', '!=', 'labour')]}" colspan="4">
+                                    <field name="labour_cost"/>
+                                    <field name="quantity"/>
+                                </group>
+
+
+                                <group string="Management Rate Details" attrs="{'invisible': [('rate_type', '!=', 'management')]}" colspan="4">
+                                    <field name="management_fee"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
-        <record id="view_item_code_tree" model="ir.ui.view">
-            <field name="name">item.code.tree</field>
+
+
+        <record id="zw_item_codes.item_code_tree" model="ir.ui.view">
+            <field name="name">zw_item_codes.item_code_tree</field>
             <field name="model">item.code</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="code"/>
-                    <field name="description"/>
-                    <field name="unit"/>
+                    <field name="description" invisible="1"/>
                     <field name="rate_type"/>
+                    <field name="unit"/>
+                    <field name="base_rate"/>
+                    <field name="state" widget="statusbar"/>
                 </tree>
             </field>
         </record>
 
-        <record id="action_item_code" model="ir.actions.act_window">
+
+        <record id="action_item_codes" model="ir.actions.act_window">
             <field name="name">Item Codes</field>
             <field name="res_model">item.code</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_item_code_tree"/>
             <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Create your first item code</p>
+                <p class="oe_view_nocontent_create">Click to create an Item Code</p>
+                <p>Standard codes:
+                    <ul>
+                        <li>TRN-KM - Transport per kilometer</li>
+                        <li>TRN-LOAD - Transport per load</li>
+                        <li>DSP-TON - Disposal per ton</li>
+                        <li>RNT-BIN - Rental per bin</li>
+                        <li>LBR-HOUR - Labour per hour</li>
+                        <li>MGT-FEE - Management fee</li>
+                    </ul>
+                </p>
             </field>
         </record>
 
-        <menuitem id="menu_zw_item_codes_root" name="Waste Item Codes" sequence="40" groups="zw_user.group_depot_admin"/>
-        <menuitem id="menu_zw_item_codes_codes" name="Item Codes" parent="menu_zw_item_codes_root" action="action_item_code" groups="zw_user.group_depot_admin"/>
+
+        <menuitem id="menu_item_codes" name="Waste Item Codes" action="action_item_codes" sequence="10"/>
+
+
+        <record id="item_code_transport_km" model="item.code">
+            <field name="code">TRN-KM</field>
+            <field name="description">Transport cost per kilometer</field>
+            <field name="unit">ZAR/km</field>
+            <field name="rate_type">transport</field>
+            <field name="base_rate">5.50</field>
+        </record>
+        <record id="item_code_transport_load" model="item.code">
+            <field name="code">TRN-LOAD</field>
+            <field name="description">Transport cost per load</field>
+            <field name="unit">ZAR/load</field>
+            <field name="rate_type">transport</field>
+            <field name="base_rate">250.00</field>
+        </record>
+        <record id="item_code_disposal_ton" model="item.code">
+            <field name="code">DSP-TON</field>
+            <field name="description">Disposal cost per ton</field>
+            <field name="unit">ZAR/ton</field>
+            <field name="rate_type">disposal</field>
+            <field name="base_rate">450.00</field>
+        </record>
+        <record id="item_code_rental_bin" model="item.code">
+            <field name="code">RNT-BIN</field>
+            <field name="description">Bin rental cost</field>
+            <field name="unit">ZAR/bin/month</field>
+            <field name="rate_type">rental</field>
+            <field name="base_rate">300.00</field>
+        </record>
+        <record id="item_code_labour_hour" model="item.code">
+            <field name="code">LBR-HOUR</field>
+            <field name="description">Labour cost per hour</field>
+            <field name="unit">ZAR/hour</field>
+            <field name="rate_type">labour</field>
+            <field name="base_rate">120.00</field>
+        </record>
+        <record id="item_code_management_fee" model="item.code">
+            <field name="code">MGT-FEE</field>
+            <field name="description">Management fee</field>
+            <field name="unit">ZAR</field>
+            <field name="rate_type">management</field>
+            <field name="base_rate">1500.00</field>
+        </record>
     </data>
 </odoo>

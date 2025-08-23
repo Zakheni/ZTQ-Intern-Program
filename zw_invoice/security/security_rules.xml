@@ -1,0 +1,11 @@
+<record id="waste_manifest_invoice_rel_company_rule" model="ir.rule">
+    <field name="name">Manifest-Invoice Relation Company</field>
+    <field name="model_id" ref="zw_manifest.model_waste_manifest_invoice_rel"/>
+    <field name="domain_force">
+        ['|',
+         ('manifest_id.company_id','=',user.company_id.id),
+         ('invoice_id.company_id','=',user.company_id.id)]
+    </field>
+    <field name="groups" eval="[(4, ref('zw_user.group_depot_admin')),
+                               (4, ref('zw_user.group_depot_manager'))]"/>
+</record>

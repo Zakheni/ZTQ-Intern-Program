@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    company_id = fields.Many2one('res.company', string='Company')
     vat_number = fields.Char(string='VAT Number', required=True)
     bank_name = fields.Char(string='Bank Name')
     branch_code = fields.Char(string='Branch Code')
@@ -13,10 +14,11 @@ class ResPartner(models.Model):
         ('business', 'Business'),
         ('checking', 'Checking')
     ], string='Account Type')
-    contact_person_position = fields.Char(string='Contact Person Position')
-    second_phone = fields.Char(string='Second Telephone Number')
+    contact_person_position = fields.Char(string='Job Position')
+    second_phone = fields.Char(string='Second Contact Number Number')
     fax_number = fields.Char(string='Fax Number')
-    mine_ids = fields.Many2many('mine.mine', string='Mines')
+    email = fields.Char(string='Email',required=True)
+
 
     @api.constrains('vat_number')
     def _check_vat_unique(self):
@@ -36,3 +38,4 @@ class ResPartner(models.Model):
             'changes': str(vals)
         })
         return res
+

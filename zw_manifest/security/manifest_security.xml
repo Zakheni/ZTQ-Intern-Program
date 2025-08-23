@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+        <!-- Existing rules -->
         <record id="access_waste_manifest_depot_admin" model="ir.rule">
             <field name="name">Depot Admin Manifest Access</field>
             <field name="model_id" ref="zw_manifest.model_waste_manifest"/>
@@ -16,6 +16,20 @@
         <record id="access_waste_schedule_depot_admin" model="ir.rule">
             <field name="name">Depot Admin Schedule Access</field>
             <field name="model_id" ref="zw_manifest.model_waste_schedule"/>
+            <field name="domain_force">[('id', '=', 'id')]</field>
+            <field name="groups" eval="[(4, ref('zw_user.group_depot_admin'))]"/>
+        </record>
+
+        <!-- New rules for waste.manifest.invoice.rel -->
+        <record id="access_waste_manifest_invoice_rel_admin" model="ir.rule">
+            <field name="name">Admin Manifest Invoice Relation Access</field>
+            <field name="model_id" ref="model_waste_manifest_invoice_rel"/>
+            <field name="domain_force">[('id', '=', 'id')]</field>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+        <record id="access_waste_manifest_invoice_rel_depot_admin" model="ir.rule">
+            <field name="name">Depot Admin Manifest Invoice Relation Access</field>
+            <field name="model_id" ref="model_waste_manifest_invoice_rel"/>
             <field name="domain_force">[('id', '=', 'id')]</field>
             <field name="groups" eval="[(4, ref('zw_user.group_depot_admin'))]"/>
         </record>
